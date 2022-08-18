@@ -1,5 +1,25 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
-  "projects": {}
+  "projects": {
+    "backend-core-azure-media-storage": "libs/backend/core/azure-media-storage",
+    "backend-core-cache": "libs/backend/core/cache",
+    "backend-core-configuration": "libs/backend/core/configuration",
+    "backend-core-core": "libs/backend/core/core",
+    "backend-core-database": "libs/backend/core/database",
+    "backend-core-queue": "libs/backend/core/queue",
+    "backend-core-rate-limiting": "libs/backend/core/rate-limiting",
+    "backend-feature-authentication": "libs/backend/feature/authentication",
+    "backend-feature-email": "libs/backend/feature/email",
+    "backend-feature-follow": "libs/backend/feature/follow",
+    "backend-feature-media": "libs/backend/feature/media",
+    "backend-feature-posts": "libs/backend/feature/posts",
+    "backend-feature-timeline": "libs/backend/feature/timeline",
+    "backend-feature-upvote": "libs/backend/feature/upvote",
+    "backend-feature-users": "libs/backend/feature/users",
+    "backend-shared": "libs/backend/shared",
+    "nest-backend": "apps/nest-backend",
+    "react-frontend": "apps/react-frontend",
+    "shared": "libs/shared"
+  }
 }

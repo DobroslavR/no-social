@@ -5,8 +5,15 @@
 /tmp
 /out-tsc
 
+# Docs
+documentation
+
 # dependencies
 node_modules
+
+# env
+*.env
+.env
 
 # IDEs and editors
 /.idea

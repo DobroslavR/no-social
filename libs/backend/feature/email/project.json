@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/backend/feature/email/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/backend/feature/email",
+        "tsConfig": "libs/backend/feature/email/tsconfig.lib.json",
+        "packageJson": "libs/backend/feature/email/package.json",
+        "main": "libs/backend/feature/email/src/index.ts",
+        "assets": ["libs/backend/feature/email/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/backend/feature/email/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/backend/feature/email"],
+      "options": {
+        "jestConfig": "libs/backend/feature/email/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["backend", "type:lib", "scope:nest-backend", "lib:feature"]
+}

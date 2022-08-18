@@ -1,0 +1,6 @@
+export enum PostState {
+  FAILED_TO_PUBLISH = 'FAILED_TO_PUBLISH',
+  DRAFT = 'DRAFT',
+  SCHEDULED = 'SCHEDULED',
+  PUBLISHED = 'PUBLISHED',
+}

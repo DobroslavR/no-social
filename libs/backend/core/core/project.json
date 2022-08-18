@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/backend/core/core/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/backend/core/core",
+        "tsConfig": "libs/backend/core/core/tsconfig.lib.json",
+        "packageJson": "libs/backend/core/core/package.json",
+        "main": "libs/backend/core/core/src/index.ts",
+        "assets": ["libs/backend/core/core/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/backend/core/core/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/backend/core/core"],
+      "options": {
+        "jestConfig": "libs/backend/core/core/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["backend", "type:lib", "scope:nest-backend"]
+}

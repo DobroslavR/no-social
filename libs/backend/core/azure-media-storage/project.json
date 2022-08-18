@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/backend/core/azure-media-storage/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/backend/core/azure-media-storage",
+        "tsConfig": "libs/backend/core/azure-media-storage/tsconfig.lib.json",
+        "packageJson": "libs/backend/core/azure-media-storage/package.json",
+        "main": "libs/backend/core/azure-media-storage/src/index.ts",
+        "assets": ["libs/backend/core/azure-media-storage/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/backend/core/azure-media-storage/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/backend/core/azure-media-storage"],
+      "options": {
+        "jestConfig": "libs/backend/core/azure-media-storage/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["backend", "type:lib", "scope:nest-backend"]
+}

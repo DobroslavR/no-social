@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/backend/feature/media/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/backend/feature/media",
+        "tsConfig": "libs/backend/feature/media/tsconfig.lib.json",
+        "packageJson": "libs/backend/feature/media/package.json",
+        "main": "libs/backend/feature/media/src/index.ts",
+        "assets": ["libs/backend/feature/media/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/backend/feature/media/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/backend/feature/media"],
+      "options": {
+        "jestConfig": "libs/backend/feature/media/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["backend", "type:lib", "scope:nest-backend", "lib:feature"]
+}

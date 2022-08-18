@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/backend/feature/upvote/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/backend/feature/upvote",
+        "tsConfig": "libs/backend/feature/upvote/tsconfig.lib.json",
+        "packageJson": "libs/backend/feature/upvote/package.json",
+        "main": "libs/backend/feature/upvote/src/index.ts",
+        "assets": ["libs/backend/feature/upvote/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/backend/feature/upvote/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/backend/feature/upvote"],
+      "options": {
+        "jestConfig": "libs/backend/feature/upvote/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["backend", "type:lib", "scope:nest-backend", "lib:feature"]
+}

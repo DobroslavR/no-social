@@ -9,7 +9,7 @@ import { createClient } from 'redis';
 import createRedisStore from 'connect-redis';
 import { AppModule } from './app/app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { ConfigSchema } from '@no-social/backend/core/configuration';
+import { ConfigSchema } from '@backend/core/configuration';
 
 const SWAGGER_UI_PATH = 'docs';
 
@@ -79,9 +79,7 @@ async function bootstrap() {
       swaggerOptions: { persistAuthorization: true },
     });
 
-    Logger.log(
-      `🚀 SwaggerUI is running on: http://localhost:${port}/${SWAGGER_UI_PATH}`
-    );
+    Logger.log(`🚀 SwaggerUI is running on: http://localhost:${port}/${SWAGGER_UI_PATH}`);
   }
 
   Logger.log(`🚀 Application is running on: http://localhost:${port}/`);

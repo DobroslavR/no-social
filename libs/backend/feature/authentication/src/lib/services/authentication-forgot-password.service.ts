@@ -1,14 +1,11 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigSchema } from '@no-social/backend/core/configuration';
-import { EmailService } from '@no-social/backend/feature/email';
-import { UsersService } from '@no-social/backend/feature/users';
-import { Exception } from '@no-social/backend/shared';
-import {
-  ForgotPasswordDto,
-  ChangeForgottenPasswordDto,
-} from '@no-social/shared';
+import { ConfigSchema } from '@backend/core/configuration';
+import { EmailService } from '@backend/feature/email';
+import { UsersService } from '@backend/feature/users';
+import { Exception } from '@backend/shared';
+import { ForgotPasswordDto, ChangeForgottenPasswordDto } from '@shared';
 
 import { AuthenticationPasswordService } from './authentication-password.service';
 
@@ -34,17 +31,13 @@ export class AuthenticationForgotPasswordService {
     this.logger.log(`Sending forgot password link to ${email}`);
     const payload: VerificationTokenPayload = { email };
     const token = this.jwtService.sign(payload, {
-      secret: this.configService.get(
-        'JWT_FORGOT_PASSWORD_VERIFICATION_TOKEN_SECRET'
-      ),
-      expiresIn: `${this.configService.get(
-        'JWT_FORGOT_PASSWORD_VERIFICATION_TOKEN_EXPIRATION_TIME'
-      )}s`,
+      secret: this.configService.get('JWT_FORGOT_PASSWORD_VERIFICATION_TOKEN_SECRET'),
+      expiresIn: `${this.configService.get('JWT_FORGOT_PASSWORD_VERIFICATION_TOKEN_EXPIRATION_TIME')}s`,
     });
 
-    const url = `${this.configService.get(
-      'CLIENT_URL'
-    )}/${this.configService.get('FORGOT_PASSWORD_URL')}?token=${token}`;
+    const url = `${this.configService.get('CLIENT_URL')}/${this.configService.get(
+      'FORGOT_PASSWORD_URL'
+    )}?token=${token}`;
 
     const text = `To reset your password, please click here: ${url}`;
 
@@ -53,9 +46,7 @@ export class AuthenticationForgotPasswordService {
     this.logger.log(`Forgot password link sent to ${email}`);
   }
 
-  async changeForgottenPassword(
-    changeForgottenPasswordDto: ChangeForgottenPasswordDto
-  ) {
+  async changeForgottenPassword(changeForgottenPasswordDto: ChangeForgottenPasswordDto) {
     const { token, password } = changeForgottenPasswordDto;
 
     const email = await this.decodeConfirmationToken(token);
@@ -63,10 +54,7 @@ export class AuthenticationForgotPasswordService {
 
     const user = await this.usersService.findByEmail(email);
 
-    const { hashedPassword, salt } =
-      await this.authenticationPasswordService.generateHashedPasswordAndSalt(
-        password
-      );
+    const { hashedPassword, salt } = await this.authenticationPasswordService.generateHashedPasswordAndSalt(password);
 
     await this.usersService.changePassword(user, hashedPassword, salt);
 
@@ -77,9 +65,7 @@ export class AuthenticationForgotPasswordService {
     this.logger.log(`Decoding confirmation token`);
     try {
       const payload = await this.jwtService.verify(token, {
-        secret: this.configService.get(
-          'JWT_FORGOT_PASSWORD_VERIFICATION_TOKEN_SECRET'
-        ),
+        secret: this.configService.get('JWT_FORGOT_PASSWORD_VERIFICATION_TOKEN_SECRET'),
       });
 
       if (typeof payload === 'object' && 'email' in payload) {

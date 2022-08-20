@@ -1,5 +1,5 @@
 {
-  "name": "@no-social/backend/core/database",
+  "name": "@backend/core/database",
   "version": "0.0.1",
   "type": "commonjs"
 }

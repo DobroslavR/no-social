@@ -4,8 +4,8 @@ import { useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { deleteAccount } from '../api';
-import { AuthRoute } from '@no-social/frontend/shared/models';
-import { getConfirmDeleteModalProps } from '@no-social/frontend/shared/utils';
+import { AuthRoute } from '@frontend/shared/models';
+import { getConfirmDeleteModalProps } from '@frontend/shared/utils';
 
 export const useDeleteAccount = () => {
   const navigate = useNavigate();

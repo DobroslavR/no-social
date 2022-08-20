@@ -2,7 +2,7 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { Global, Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { User } from '@no-social/shared';
+import { User } from '@shared';
 
 @Global()
 @Module({

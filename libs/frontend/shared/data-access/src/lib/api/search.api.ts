@@ -1,5 +1,5 @@
-import { SearchWithAPIOptions } from '@no-social/frontend/shared/models';
-import { SearchRequestDto, SearchRequestPaginationDto, SearchApiResponse } from '@no-social/shared';
+import { SearchWithAPIOptions } from '@frontend/shared/models';
+import { SearchRequestDto, SearchRequestPaginationDto, SearchApiResponse } from '@shared';
 import { api } from './api';
 
 export const search = async <T extends object = Record<string, unknown>>({

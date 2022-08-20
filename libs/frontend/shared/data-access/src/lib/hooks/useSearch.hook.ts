@@ -1,8 +1,8 @@
-import { ApiQueryId, SearchOptions } from '@no-social/frontend/shared/models';
+import { ApiQueryId, SearchOptions } from '@frontend/shared/models';
 import { AxiosError } from 'axios';
 import { useCallback, useMemo, useState } from 'react';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { SearchApiResponse, SearchApiResponseMeta } from '@no-social/shared';
+import { SearchApiResponse, SearchApiResponseMeta } from '@shared';
 import { search } from '../api/search.api';
 
 export interface UseSearchOptions<T extends object = Record<string, unknown>> {

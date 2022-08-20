@@ -26,6 +26,6 @@
     "frontend-users-data-access": "libs/frontend/users/data-access",
     "nest-backend": "apps/nest-backend",
     "react-frontend": "apps/react-frontend",
-    "shared": "libs/shared"
+    "@shared": "libs/shared"
   }
 }

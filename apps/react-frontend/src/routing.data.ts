@@ -1,4 +1,4 @@
-import { RootRoute, Route } from '@no-social/frontend/shared/models';
+import { RootRoute, Route } from '@frontend/shared/models';
 import { lazy } from 'react';
 
 export const PRIVATE_ROUTES: Route[] = [

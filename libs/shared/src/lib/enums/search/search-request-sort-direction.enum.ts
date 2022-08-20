@@ -1,4 +1,4 @@
 export enum SearchRequestSortDirection {
-  ASC = 'ASC',
-  DESC = 'DESC',
+  ASC = 'asc',
+  DESC = 'desc',
 }

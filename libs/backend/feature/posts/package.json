@@ -1,5 +1,5 @@
 {
-  "name": "@no-social/backend/feature/posts",
+  "name": "@backend/feature/posts",
   "version": "0.0.1",
   "type": "commonjs"
 }

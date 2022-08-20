@@ -1,4 +1,4 @@
-import { SearchApiPagination, SearchRequestFilterDto, SearchRequestSortDto } from '@no-social/shared';
+import { SearchApiPagination, SearchRequestFilterDto, SearchRequestSortDto } from '@shared';
 
 export interface SearchOptions<T extends object = Record<string, unknown>> {
   pagination: SearchApiPagination;

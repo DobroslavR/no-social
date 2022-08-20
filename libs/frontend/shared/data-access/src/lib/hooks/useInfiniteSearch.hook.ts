@@ -2,8 +2,8 @@ import { AxiosError } from 'axios';
 
 import { useMemo } from 'react';
 import { useInfiniteQuery, UseInfiniteQueryOptions } from '@tanstack/react-query';
-import { ApiQueryId, SearchOptions } from '@no-social/frontend/shared/models';
-import { SearchApiResponse, SearchApiResponseMeta } from '@no-social/shared';
+import { ApiQueryId, SearchOptions } from '@frontend/shared/models';
+import { SearchApiResponse, SearchApiResponseMeta } from '@shared';
 import { search } from '../api/search.api';
 
 export interface UseInfiniteSearchOptions<T extends object = Record<string, unknown>> {

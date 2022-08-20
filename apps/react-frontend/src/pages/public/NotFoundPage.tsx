@@ -1,5 +1,5 @@
 import { createStyles, Title, Text, Button, Group, Center, Stack } from '@mantine/core';
-import { ApplicationRoute } from '@no-social/frontend/shared/models';
+import { ApplicationRoute } from '@frontend/shared/models';
 import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
@@ -48,7 +48,8 @@ export const NotFoundPage = () => {
         <div className={classes.label}>404</div>
         <Title className={classes.title}>You have found a secret place.</Title>
         <Text color="dimmed" size="lg" align="center" className={classes.description}>
-          Unfortunately, this is only a 404 page. You may have mistyped the address, or the page has been moved to another URL.
+          Unfortunately, this is only a 404 page. You may have mistyped the address, or the page has been moved to
+          another URL.
         </Text>
         <Group position="center">
           <Link to={`/${ApplicationRoute.HOME}`}>

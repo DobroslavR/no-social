@@ -1,5 +1,5 @@
 {
-  "name": "@no-social/backend/core/rate-limiting",
+  "name": "@backend/core/rate-limiting",
   "version": "0.0.1",
   "type": "commonjs"
 }

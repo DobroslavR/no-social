@@ -1,19 +1,6 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  Patch,
-  Post,
-  Req,
-  Session as NestSession,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, Patch, Post, Req, Session as NestSession, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import {
-  SignInWithCredentialsGuard,
-  AuthenticatedUser,
-  CookieAuthenticationGuard,
-} from '@no-social/backend/shared';
+import { SignInWithCredentialsGuard, AuthenticatedUser, CookieAuthenticationGuard } from '@backend/shared';
 import {
   SignUpDto,
   SignInDto,
@@ -22,7 +9,7 @@ import {
   ForgotPasswordDto,
   ChangeForgottenPasswordDto,
   ChangePasswordDto,
-} from '@no-social/shared';
+} from '@shared';
 import { Request } from 'express';
 import { Session } from 'express-session';
 import { AuthenticationEmailService } from './services/authentication-email.service';
@@ -48,10 +35,7 @@ export class AuthenticationController {
 
   @Post('/sign_up')
   @HttpCode(200)
-  async signUp(
-    @Body() signUpDto: SignUpDto,
-    @NestSession() session: SessionWithUser
-  ) {
+  async signUp(@Body() signUpDto: SignUpDto, @NestSession() session: SessionWithUser) {
     const user = await this.authenticationService.signUp(signUpDto);
     session.passport = {
       user: user.id,
@@ -68,14 +52,8 @@ export class AuthenticationController {
 
   @Patch('/change_password')
   @UseGuards(CookieAuthenticationGuard)
-  async changePassword(
-    @Body() changePasswordDto: ChangePasswordDto,
-    @AuthenticatedUser() user: User
-  ) {
-    return await this.authenticationPasswordService.changePassword(
-      user,
-      changePasswordDto
-    );
+  async changePassword(@Body() changePasswordDto: ChangePasswordDto, @AuthenticatedUser() user: User) {
+    return await this.authenticationPasswordService.changePassword(user, changePasswordDto);
   }
 
   @Post('/confirm_email')
@@ -86,18 +64,12 @@ export class AuthenticationController {
 
   @Post('/forgot_password')
   async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
-    return await this.authenticationForgotPasswordService.sendForgotPasswordLink(
-      forgotPasswordDto
-    );
+    return await this.authenticationForgotPasswordService.sendForgotPasswordLink(forgotPasswordDto);
   }
 
   @Patch('/change_forgotten_password')
-  async changeForgottenPassword(
-    @Body() changeForgottenPasswordDto: ChangeForgottenPasswordDto
-  ) {
-    return await this.authenticationForgotPasswordService.changeForgottenPassword(
-      changeForgottenPasswordDto
-    );
+  async changeForgottenPassword(@Body() changeForgottenPasswordDto: ChangeForgottenPasswordDto) {
+    return await this.authenticationForgotPasswordService.changeForgottenPassword(changeForgottenPasswordDto);
   }
 
   @Post('/resend_confirmation_link')

@@ -1,7 +1,7 @@
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ConfigSchema } from '@no-social/backend/core/configuration';
+import { ConfigSchema } from '@backend/core/configuration';
 
 @Module({
   imports: [

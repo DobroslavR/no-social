@@ -1,2 +1,2 @@
-export * from './search-sort-direction.enum';
-export * from './search-filter-operator.enum';
+export * from './search-request-sort-direction.enum';
+export * from './search-request-filter-operator.enum';

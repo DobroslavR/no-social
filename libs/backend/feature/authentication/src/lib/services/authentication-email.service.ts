@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigSchema } from '@no-social/backend/core/configuration';
-import { EmailService } from '@no-social/backend/feature/email';
-import { UsersService } from '@no-social/backend/feature/users';
-import { Exception } from '@no-social/backend/shared';
-import { ConfirmEmailDto, User } from '@no-social/shared';
+import { ConfigSchema } from '@backend/core/configuration';
+import { EmailService } from '@backend/feature/email';
+import { UsersService } from '@backend/feature/users';
+import { Exception } from '@backend/shared';
+import { ConfirmEmailDto, User } from '@shared';
 
 interface VerificationTokenPayload {
   email: string;
@@ -27,14 +27,12 @@ export class AuthenticationEmailService {
     const payload: VerificationTokenPayload = { email };
     const token = this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_EMAIL_VERIFICATION_TOKEN_SECRET'),
-      expiresIn: `${this.configService.get(
-        'JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION_TIME'
-      )}s`,
+      expiresIn: `${this.configService.get('JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION_TIME')}s`,
     });
 
-    const url = `${this.configService.get(
-      'CLIENT_URL'
-    )}/${this.configService.get('EMAIL_CONFIRMATION_URL')}?token=${token}`;
+    const url = `${this.configService.get('CLIENT_URL')}/${this.configService.get(
+      'EMAIL_CONFIRMATION_URL'
+    )}?token=${token}`;
 
     const text = `Welcome to the application. To confirm the email address, click here: ${url}`;
 
@@ -68,9 +66,7 @@ export class AuthenticationEmailService {
     } catch (error) {
       const err = error as Error;
       if (err?.name === 'TokenExpiredError') {
-        throw new BadRequestException(
-          Exception.EMAIL_CONFIRMATION_LINK_EXPIRED
-        );
+        throw new BadRequestException(Exception.EMAIL_CONFIRMATION_LINK_EXPIRED);
       }
       throw new BadRequestException(Exception.BAD_EMAIL_CONFIRMATION_PAYLOAD);
     }

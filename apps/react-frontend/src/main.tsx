@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { BrowserRouter, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { GLOBAL_ROUTES, PUBLIC_ROUTES, PRIVATE_ROUTES } from './routing.data';
-import { mapRouting } from '@no-social/frontend/shared/utils';
+import { mapRouting } from '@frontend/shared/utils';
 import Application from './Application';
 
 const GlobalRoutes = mapRouting(GLOBAL_ROUTES);

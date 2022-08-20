@@ -1,4 +1,4 @@
-import { ApiQueryId } from '@no-social/frontend/shared/models';
+import { ApiQueryId } from '@frontend/shared/models';
 import { useQuery } from '@tanstack/react-query';
 import { useSetRecoilState } from 'recoil';
 import { fetchCurrentUser } from '../api';

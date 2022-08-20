@@ -1,5 +1,5 @@
-import { persistAtomLocalStorage } from '@no-social/frontend/shared/data-access';
-import { User } from '@no-social/shared';
+import { persistAtomLocalStorage } from '@frontend/shared/data-access';
+import { User } from '@shared';
 import { atom } from 'recoil';
 
 export const AuthenticatedUserState = atom<Partial<User> | null>({

@@ -1,7 +1,7 @@
 import { MailerSend, EmailParams, Sender, Recipient } from 'mailer-send-ts';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ConfigSchema } from '@no-social/backend/core/configuration';
+import { ConfigSchema } from '@backend/core/configuration';
 
 const sentFrom = new Sender('hello@logfeedy.com', 'Dobroslav from NoSocial');
 
@@ -20,11 +20,7 @@ export class EmailService {
 
     const recipients = [new Recipient(email)];
 
-    const emailParams = new EmailParams()
-      .setFrom(sentFrom)
-      .setTo(recipients)
-      .setSubject(subject)
-      .setText(text);
+    const emailParams = new EmailParams().setFrom(sentFrom).setTo(recipients).setSubject(subject).setText(text);
 
     const response = await this.mailerSendClient.email.send(emailParams);
 

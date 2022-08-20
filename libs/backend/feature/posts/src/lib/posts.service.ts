@@ -2,23 +2,10 @@ import { MikroORM } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/postgresql';
 import { InjectQueue } from '@nestjs/bull';
-import {
-  BadRequestException,
-  Injectable,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
-import { SearchService } from '@no-social/backend/feature/search';
-import { Exception } from '@no-social/backend/shared';
-import {
-  CreatePostDraftDto,
-  Post,
-  PostState,
-  PublishPostDto,
-  SchedulePostDto,
-  SearchFilterOperator,
-  SearchRequestDto,
-} from '@no-social/shared';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { SearchService } from '@backend/feature/search';
+import { Exception } from '@backend/shared';
+import { CreatePostDraftDto, Post, PostState, PublishPostDto, SchedulePostDto, SearchRequestDto } from '@shared';
 import { Queue } from 'bull';
 
 @Injectable()
@@ -34,10 +21,11 @@ export class PostsService extends SearchService<Post> {
 
   private logger = new Logger('PostsService');
 
-  async searchPosts(userId: string, searchRequestDto: SearchRequestDto) {
+  async searchPosts(userId: string, searchRequestDto: SearchRequestDto<Post>) {
     return this.search({
       repository: this.postsRepository,
       searchRequestDto,
+      allowedSorts: ['created_at', 'published_at', 'scheduled_at'],
       predefinedFilters: {
         author: {
           id: userId,
@@ -47,10 +35,7 @@ export class PostsService extends SearchService<Post> {
     });
   }
 
-  async createPostDraft(
-    userId: string,
-    createPostDraftDto: CreatePostDraftDto
-  ) {
+  async createPostDraft(userId: string, createPostDraftDto: CreatePostDraftDto) {
     this.logger.log(`Creating post draft for user ${userId}`);
 
     const { text } = createPostDraftDto;
@@ -68,13 +53,7 @@ export class PostsService extends SearchService<Post> {
     return post;
   }
 
-  async findPostByIdWithErrorValidation({
-    postId,
-    userId,
-  }: {
-    userId: string;
-    postId: string;
-  }) {
+  async findPostByIdWithErrorValidation({ postId, userId }: { userId: string; postId: string }) {
     this.logger.log(`Finding post ${postId} for user ${userId}`);
 
     const post = await this.postsRepository.findOne({

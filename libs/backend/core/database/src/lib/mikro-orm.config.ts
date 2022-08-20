@@ -1,7 +1,7 @@
 import { Options } from '@mikro-orm/core';
 import { ConfigService } from '@nestjs/config';
-import { ConfigSchema } from '@no-social/backend/core/configuration';
-import { Post, PostComment, User } from '@no-social/shared';
+import { ConfigSchema } from '@backend/core/configuration';
+import { Post, PostComment, User } from '@shared';
 
 const configService = new ConfigService<ConfigSchema>();
 

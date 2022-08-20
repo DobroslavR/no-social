@@ -1,8 +1,8 @@
 import { EntityRepository, MikroORM, UseRequestContext } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { Exception } from '@no-social/backend/shared';
-import { SignUpDto, User } from '@no-social/shared';
+import { Exception } from '@backend/shared';
+import { SignUpDto, User } from '@shared';
 
 interface CreateUsersProps extends SignUpDto {
   password: string;

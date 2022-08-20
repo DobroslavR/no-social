@@ -1,13 +1,8 @@
 import { DriverException } from '@mikro-orm/core';
-import {
-  ConflictException,
-  Injectable,
-  InternalServerErrorException,
-  Logger,
-} from '@nestjs/common';
-import { UsersService } from '@no-social/backend/feature/users';
-import { Exception } from '@no-social/backend/shared';
-import { SignUpDto } from '@no-social/shared';
+import { ConflictException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { UsersService } from '@backend/feature/users';
+import { Exception } from '@backend/shared';
+import { SignUpDto } from '@shared';
 
 import { AuthenticationEmailService } from './authentication-email.service';
 import { AuthenticationPasswordService } from './authentication-password.service';
@@ -26,10 +21,7 @@ export class AuthenticationService {
     const { password, email } = signUpDto;
     this.logger.log(`Signing up user ${email}`);
     try {
-      const { hashedPassword, salt } =
-        await this.authenticationPasswordService.generateHashedPasswordAndSalt(
-          password
-        );
+      const { hashedPassword, salt } = await this.authenticationPasswordService.generateHashedPasswordAndSalt(password);
 
       const user = await this.usersService.create({
         ...signUpDto,
@@ -41,9 +33,7 @@ export class AuthenticationService {
         await this.authenticationEmailService.sendEmailVerificationLink(email);
       } catch (error) {
         this.logger.error(error);
-        throw new ConflictException(
-          Exception.FAILED_TO_SEND_VERIFICATION_EMAIL
-        );
+        throw new ConflictException(Exception.FAILED_TO_SEND_VERIFICATION_EMAIL);
       }
       return user;
     } catch (e) {

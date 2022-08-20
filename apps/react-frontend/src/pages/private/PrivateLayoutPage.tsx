@@ -5,8 +5,8 @@ import { Search } from 'tabler-icons-react';
 import TimeAgo from 'javascript-time-ago';
 // @ts-ignore
 import en from 'javascript-time-ago/locale/en.json';
-import { RootRoute } from '@no-social/frontend/shared/models';
-import { PrivateLayoutGuard } from '@no-social/frontend/shared/ui';
+import { RootRoute } from '@frontend/shared/models';
+import { PrivateLayoutGuard } from '@frontend/shared/ui';
 
 TimeAgo.addDefaultLocale(en);
 

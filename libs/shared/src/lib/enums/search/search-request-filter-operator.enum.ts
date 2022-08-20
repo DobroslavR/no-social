@@ -1,4 +1,4 @@
-export enum SearchFilterOperator {
+export enum SearchRequestFilterOperator {
   // Single Value
   EQUAL = 'EQUAL',
   NOT_EQUAL = 'NOT_EQUAL',

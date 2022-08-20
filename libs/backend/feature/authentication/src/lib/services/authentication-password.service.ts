@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { UsersService } from '@no-social/backend/feature/users';
-import { Exception } from '@no-social/backend/shared';
-import { ChangePasswordDto, SignInDto, User } from '@no-social/shared';
+import { UsersService } from '@backend/feature/users';
+import { Exception } from '@backend/shared';
+import { ChangePasswordDto, SignInDto, User } from '@shared';
 import { genSalt, hash as bcryptHash } from 'bcrypt';
 import { ValidationCredentials } from '../authentication.interface';
 
@@ -22,15 +22,9 @@ export class AuthenticationPasswordService {
       throw new BadRequestException(Exception.BAD_OLD_PASSWORD);
     }
 
-    const { hashedPassword, salt } = await this.generateHashedPasswordAndSalt(
-      new_password
-    );
+    const { hashedPassword, salt } = await this.generateHashedPasswordAndSalt(new_password);
 
-    const updatedUser = await this.usersService.changePassword(
-      user,
-      hashedPassword,
-      salt
-    );
+    const updatedUser = await this.usersService.changePassword(user, hashedPassword, salt);
 
     return updatedUser;
   }

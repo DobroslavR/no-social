@@ -7,7 +7,7 @@ import { AuthenticationPasswordService } from './services/authentication-passwor
 import { AuthenticationEmailService } from './services/authentication-email.service';
 import { AuthenticationForgotPasswordService } from './services/authentication-forgot-password.service';
 import { AuthenticationService } from './services/authentication.service';
-import { UsersModule } from '@no-social/backend/feature/users';
+import { UsersModule } from '@backend/feature/users';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({

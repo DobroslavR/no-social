@@ -1,5 +1,5 @@
-import { api } from '@no-social/frontend/shared/data-access';
-import { User } from '@no-social/shared';
+import { api } from '@frontend/shared/data-access';
+import { User } from '@shared';
 
 const ENDPOINT = 'users';
 

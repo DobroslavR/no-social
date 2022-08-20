@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CacheModule as NestCacheModule } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ConfigSchema } from '@no-social/backend/core/configuration';
+import { ConfigSchema } from '@backend/core/configuration';
 import redisStore from 'cache-manager-redis-store';
 
 @Module({

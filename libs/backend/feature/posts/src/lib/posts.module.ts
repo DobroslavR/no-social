@@ -2,7 +2,7 @@ import { PostsService } from './posts.service';
 import { PostsController } from './posts.controller';
 import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { Post, PostComment } from '@no-social/shared';
+import { Post, PostComment } from '@shared';
 import { BullModule } from '@nestjs/bull';
 import { PostsProcessor } from './posts.processor';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@no-social/backend/feature/timeline",
+  "name": "@backend/feature/timeline",
   "version": "0.0.1",
   "type": "commonjs"
 }

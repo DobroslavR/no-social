@@ -1,3 +1,3 @@
 export * from './authentication';
 export * from './posts';
-export * from './shared';
+export * from './search';

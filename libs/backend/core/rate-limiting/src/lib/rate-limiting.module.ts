@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ConfigSchema } from '@no-social/backend/core/configuration';
+import { ConfigSchema } from '@backend/core/configuration';
 import { RateLimiterModule as NestRateLimiterModule } from 'nestjs-rate-limiter';
 import { createClient } from 'redis';
 

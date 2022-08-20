@@ -1,7 +1,7 @@
 import { TimelinePost } from '@frontend/posts/ui';
-import { useSearch } from '@frontend/shared/data-access';
+import { useInfiniteSearch, useSearch } from '@frontend/shared/data-access';
 import { ApiQueryId } from '@frontend/shared/models';
-import { DebouncedSearchInput, PageCenteredContent } from '@frontend/shared/ui';
+import { DebouncedSearchInput, InfiniteScrollLoading, PageCenteredContent } from '@frontend/shared/ui';
 import { Paper, Stack } from '@mantine/core';
 import { Post } from '@shared';
 import { useState } from 'react';
@@ -9,16 +9,13 @@ import { useState } from 'react';
 export const HomePage = () => {
   const [search, setSearch] = useState('');
 
-  const {
-    data,
-    query: { isLoading },
-  } = useSearch<Post>({
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteSearch<Post>({
     dataSourceEndpoint: 'posts',
     dataSourceId: ApiQueryId.SEARCH_POSTS,
     options: {
       q: search,
       sortBy: { path: 'created_at', direction: 'desc' },
-      pagination: { page: 1, limit: 30 },
+
       /*       filters: [
         {
           path: 'text',
@@ -27,6 +24,7 @@ export const HomePage = () => {
         },
       ], */
     },
+    limit: 5,
   });
 
   console.log(data);
@@ -39,6 +37,7 @@ export const HomePage = () => {
           <TimelinePost key={post.id} {...post} />
         ))}
       </Stack>
+      <InfiniteScrollLoading fetchNextPage={fetchNextPage} isLoading={isLoading} hasNextPage={!!hasNextPage} />
     </PageCenteredContent>
   );
 };

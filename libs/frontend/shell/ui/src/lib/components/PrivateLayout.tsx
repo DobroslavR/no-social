@@ -25,10 +25,13 @@ export const PrivateLayout = ({ children }: { children: ReactNode }) => {
             sx={(theme) => ({
               borderBottom: `1px solid ${theme.colors.dark[7]}`,
             })}
-            p="md"
+            px="md"
+            py="sm"
           >
             <Group mb="sm">
-              <Title order={3}>Home</Title>
+              <Title m={0} order={4}>
+                Home
+              </Title>
             </Group>
             <Group sx={{ width: '100%' }} align="flex-start">
               <Avatar color="blue" radius="xl" size="md">

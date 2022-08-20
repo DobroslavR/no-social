@@ -11,7 +11,7 @@ export interface InfiniteScrollLoadingProps {
 export const InfiniteScrollLoading = ({ fetchNextPage, hasNextPage, isLoading, size }: InfiniteScrollLoadingProps) => {
   const [loadMoreReference] = useInfiniteScroll({
     loading: isLoading,
-    hasNextPage: !!hasNextPage,
+    hasNextPage,
     onLoadMore: fetchNextPage,
     // When there is an error, we stop infinite loading.
     // It can be reactivated by setting "error" state as undefined.
@@ -19,7 +19,6 @@ export const InfiniteScrollLoading = ({ fetchNextPage, hasNextPage, isLoading, s
     // `rootMargin` is passed to `IntersectionObserver`.
     // We can use it to trigger 'onLoadMore' when the sentry comes near to become
     // visible, instead of becoming fully visible on the screen.
-    rootMargin: '0px 0px 400px 0px',
   });
 
   if (isLoading) {

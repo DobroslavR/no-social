@@ -30,9 +30,7 @@ export type Path<T, D extends number = 5> = [D] extends [never]
   ? never
   : T extends object
   ? {
-      [K in keyof T]-?: K extends string | number
-        ? `${K}` | Join<K, Path<T[K], Prev[D]>>
-        : never;
+      [K in keyof T]-?: K extends string | number ? `${K}` | Join<K, Path<T[K], Prev[D]>> : never;
     }[keyof T]
   : '';
 

@@ -60,8 +60,7 @@ export interface ConfigSchema {
         JWT_EMAIL_VERIFICATION_TOKEN_SECRET: Joi.string().required(),
         JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION_TIME: Joi.number().positive(),
         JWT_FORGOT_PASSWORD_VERIFICATION_TOKEN_SECRET: Joi.string().required(),
-        JWT_FORGOT_PASSWORD_VERIFICATION_TOKEN_EXPIRATION_TIME:
-          Joi.number().positive(),
+        JWT_FORGOT_PASSWORD_VERIFICATION_TOKEN_EXPIRATION_TIME: Joi.number().positive(),
         MAILER_SEND_API_KEY: Joi.string().required(),
         CLIENT_URL: Joi.string().required(),
         FORGOT_PASSWORD_URL: Joi.string().required(),

@@ -12,6 +12,5 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory:
-    '../../../../coverage/libs/backend/core/azure-media-storage',
+  coverageDirectory: '../../../../coverage/libs/backend/core/azure-media-storage',
 };

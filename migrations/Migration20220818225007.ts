@@ -22,9 +22,7 @@ export class Migration20220818225007 extends Migration {
       'alter table "posts_author" add constraint "posts_author_user_id_foreign" foreign key ("user_id") references "users" ("id") on update cascade on delete cascade;'
     );
 
-    this.addSql(
-      'alter table "posts" drop constraint "posts_author_id_foreign";'
-    );
+    this.addSql('alter table "posts" drop constraint "posts_author_id_foreign";');
 
     this.addSql('alter table "posts" drop column "author_id";');
   }

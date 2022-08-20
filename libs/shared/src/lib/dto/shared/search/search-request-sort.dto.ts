@@ -1,10 +1,11 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { SearchRequestSortDirection } from '../../../enums';
+import { NestedPath } from '../../../interfaces';
 
-export class SearchRequestSortDto {
+export class SearchRequestSortDto<T> {
   @IsString()
   @IsNotEmpty()
-  path!: string;
+  path!: NestedPath<T>;
 
   @IsEnum(SearchRequestSortDirection)
   @IsNotEmpty()

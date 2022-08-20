@@ -25,5 +25,12 @@
       "dependsOn": ["^build"]
     }
   },
-  "defaultProject": "nest-backend"
+  "defaultProject": "nest-backend",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    }
+  }
 }

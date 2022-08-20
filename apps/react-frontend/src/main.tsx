@@ -1,11 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { StrictMode } from 'react';
+import { render } from 'react-dom';
+import { BrowserRouter, Routes } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
+import { GLOBAL_ROUTES, PUBLIC_ROUTES, PRIVATE_ROUTES } from './routing.data';
+import { mapRouting } from '@no-social/frontend/shared/utils';
+import Application from './Application';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+const GlobalRoutes = mapRouting(GLOBAL_ROUTES);
+const PublicRoutes = mapRouting(PUBLIC_ROUTES);
+const PrivateRoutes = mapRouting(PRIVATE_ROUTES);
+
+render(
+  <StrictMode>
+    <BrowserRouter>
+      <RecoilRoot>
+        <Application>
+          <Routes>
+            {GlobalRoutes} {PublicRoutes} {PrivateRoutes}
+          </Routes>
+        </Application>
+      </RecoilRoot>
+    </BrowserRouter>
+  </StrictMode>,
   document.getElementById('root')
 );

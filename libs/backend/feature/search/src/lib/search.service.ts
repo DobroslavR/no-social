@@ -2,6 +2,8 @@ import { EntityRepository } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import {
   NestedPath,
+  SearchApiResponse,
+  SearchApiResponseMeta,
   SearchFilterOperator,
   SearchRequestDto,
   SearchRequestFilterDto,
@@ -13,9 +15,7 @@ import { merge, set } from 'lodash';
 import { AutoPath } from '@mikro-orm/core/typings';
 import { Exception } from '@no-social/backend/shared';
 
-const getSmartQueryCondition = <T>(
-  filter: SearchRequestFilterDto
-): FilterQuery<T> => {
+const getSmartQueryCondition = <T>(filter: SearchRequestFilterDto<T>): FilterQuery<T> => {
   const { operator, value } = filter;
 
   switch (operator) {
@@ -57,7 +57,7 @@ const getSmartQueryCondition = <T>(
   }
 };
 
-const getFilterCondition = (filter: SearchRequestFilterDto) => {
+const getFilterCondition = <T>(filter: SearchRequestFilterDto<T>) => {
   const { path } = filter;
   const obj = {};
   set(obj, path, getSmartQueryCondition(filter));
@@ -70,7 +70,7 @@ const generateFilterQueries = <T>({
   searchFields,
   q,
 }: {
-  filters: SearchRequestFilterDto[];
+  filters: SearchRequestFilterDto<T>[];
   predefinedFilters: FilterQuery<T>;
   searchFields?: NestedPath<T>[];
   q?: string;
@@ -84,10 +84,7 @@ const generateFilterQueries = <T>({
   return merge(filterQueries, predefinedFilters);
 };
 
-const checkIfIncludesNotAllowedFilters = <T>(
-  allowedFilters: NestedPath<T>[],
-  filters?: SearchRequestFilterDto[]
-) => {
+const checkIfIncludesNotAllowedFilters = <T>(allowedFilters: NestedPath<T>[], filters?: SearchRequestFilterDto<T>[]) => {
   const includesNotAllowedFilters = filters
     ? filters.some((f) => {
         return !allowedFilters.includes(f.path as NestedPath<T>);
@@ -96,34 +93,25 @@ const checkIfIncludesNotAllowedFilters = <T>(
   return includesNotAllowedFilters;
 };
 
-const checkIfIncludesNotAllowedSortByRules = <T>(
-  allowedSorts: NestedPath<T>[],
-  sortByRule?: SearchRequestSortDto
-) => {
-  const includesNotAllowedSortByRules = sortByRule
-    ? !allowedSorts.includes(sortByRule.path as NestedPath<T>)
-    : false;
+const checkIfIncludesNotAllowedSortByRules = <T>(allowedSorts: NestedPath<T>[], sortByRule?: SearchRequestSortDto<T>) => {
+  const includesNotAllowedSortByRules = sortByRule ? !allowedSorts.includes(sortByRule.path as NestedPath<T>) : false;
   return includesNotAllowedSortByRules;
 };
 
-const getPaginationSettings = (
-  searchRequestPaginationDto: SearchRequestPaginationDto
-) => {
+const getPaginationSettings = (searchRequestPaginationDto: SearchRequestPaginationDto) => {
   const { limit, page } = searchRequestPaginationDto;
 
   return { limit, offset: page === 1 ? 0 : page * limit };
 };
 
-const getPaginationMeta = (
-  searchRequestPaginationDto: SearchRequestPaginationDto,
-  total_count: number
-) => {
+const getPaginationMeta = (searchRequestPaginationDto: SearchRequestPaginationDto, total_count: number): SearchApiResponseMeta => {
   const { limit, page } = searchRequestPaginationDto;
 
-  const meta = {
+  const meta: SearchApiResponseMeta = {
     page,
     limit,
     total_count,
+    total_pages: total_count < limit ? 1 : (total_count - (total_count % limit)) / limit,
     has_next_page: total_count > page * limit,
     has_previous_page: page > 1,
   };
@@ -143,7 +131,7 @@ export interface SearchOptions<T> {
 
 @Injectable()
 export class SearchService<T> {
-  async search(options: SearchOptions<T>) {
+  async search(options: SearchOptions<T>): Promise<SearchApiResponse<T>> {
     const {
       repository,
       searchRequestDto,
@@ -164,13 +152,10 @@ export class SearchService<T> {
       throw new BadRequestException(Exception.NOT_ALLOWED_SEARCH_FILTERS);
     }
 
-    const [data, total_count] = await repository.findAndCount(
-      generateFilterQueries({ filters, predefinedFilters, searchFields, q }),
-      {
-        ...getPaginationSettings(pagination),
-        populate: relations as unknown as AutoPath<T, string>[],
-      }
-    );
+    const [data, total_count] = await repository.findAndCount(generateFilterQueries({ filters, predefinedFilters, searchFields, q }), {
+      ...getPaginationSettings(pagination),
+      populate: relations as unknown as AutoPath<T, string>[],
+    });
 
     return {
       data,

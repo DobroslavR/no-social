@@ -1,7 +1,8 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { SearchFilterOperator } from '../../../enums';
+import { NestedPath } from '../../../interfaces';
 
-export class SearchRequestFilterDto {
+export class SearchRequestFilterDto<T> {
   @IsEnum(SearchFilterOperator)
   @IsNotEmpty()
   operator!: SearchFilterOperator;
@@ -11,5 +12,5 @@ export class SearchRequestFilterDto {
 
   @IsString()
   @IsNotEmpty()
-  path!: string;
+  path!: NestedPath<T>;
 }

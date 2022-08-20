@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/users/data-access/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/frontend/users/data-access",
+        "tsConfig": "libs/frontend/users/data-access/tsconfig.lib.json",
+        "project": "libs/frontend/users/data-access/package.json",
+        "entryFile": "libs/frontend/users/data-access/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "libs/frontend/users/data-access/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/frontend/users/data-access/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/frontend/users/data-access"],
+      "options": {
+        "jestConfig": "libs/frontend/users/data-access/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

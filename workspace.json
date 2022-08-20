@@ -19,6 +19,11 @@
     "backend-feature-upvote": "libs/backend/feature/upvote",
     "backend-feature-users": "libs/backend/feature/users",
     "backend-shared": "libs/backend/shared",
+    "frontend-shared-data-access": "libs/frontend/shared/data-access",
+    "frontend-shared-models": "libs/frontend/shared/models",
+    "frontend-shared-ui": "libs/frontend/shared/ui",
+    "frontend-shared-utils": "libs/frontend/shared/utils",
+    "frontend-users-data-access": "libs/frontend/users/data-access",
     "nest-backend": "apps/nest-backend",
     "react-frontend": "apps/react-frontend",
     "shared": "libs/shared"

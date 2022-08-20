@@ -24,10 +24,12 @@
     "frontend-authentication-ui": "libs/frontend/authentication/ui",
     "frontend-home-data-access": "libs/frontend/home/data-access",
     "frontend-home-ui": "libs/frontend/home/ui",
+    "frontend-posts-ui": "libs/frontend/posts/ui",
     "frontend-shared-data-access": "libs/frontend/shared/data-access",
     "frontend-shared-models": "libs/frontend/shared/models",
     "frontend-shared-ui": "libs/frontend/shared/ui",
     "frontend-shared-utils": "libs/frontend/shared/utils",
+    "frontend-shell-ui": "libs/frontend/shell/ui",
     "frontend-users-data-access": "libs/frontend/users/data-access",
     "nest-backend": "apps/nest-backend",
     "react-frontend": "apps/react-frontend"

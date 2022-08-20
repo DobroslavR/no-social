@@ -5,7 +5,15 @@ import { InjectQueue } from '@nestjs/bull';
 import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { SearchService } from '@backend/feature/search';
 import { Exception } from '@backend/shared';
-import { CreatePostDraftDto, Post, PostState, PublishPostDto, SchedulePostDto, SearchRequestDto } from '@shared';
+import {
+  CreatePostDraftDto,
+  Post,
+  PostState,
+  PublishPostDraftDto,
+  PublishPostDto,
+  SchedulePostDto,
+  SearchRequestDto,
+} from '@shared';
 import { Queue } from 'bull';
 
 @Injectable()
@@ -32,6 +40,7 @@ export class PostsService extends SearchService<Post> {
         author: {
           id: userId,
         },
+        state: PostState.PUBLISHED,
       },
       relations: ['author'],
     });
@@ -72,7 +81,7 @@ export class PostsService extends SearchService<Post> {
     return post;
   }
 
-  async publishPost(userId: string, publishPostDto: PublishPostDto) {
+  async publishPostDraft(userId: string, publishPostDto: PublishPostDraftDto) {
     const { postId } = publishPostDto;
 
     this.logger.log(`Publishing post for user ${userId} with id ${postId}`);
@@ -89,6 +98,25 @@ export class PostsService extends SearchService<Post> {
     await this.postsRepository.persistAndFlush(post);
 
     this.logger.log(`Published post for user ${userId} with id ${postId}`);
+
+    return post;
+  }
+
+  async publishPost(userId: string, publishPostNowDto: PublishPostDto) {
+    const { text } = publishPostNowDto;
+
+    this.logger.log(`Publishing postnow for user ${userId}`);
+
+    const post = this.postsRepository.create({
+      text,
+      author: userId,
+      state: PostState.PUBLISHED,
+      published_at: new Date(),
+    });
+
+    await this.postsRepository.persistAndFlush(post);
+
+    this.logger.log(`Published post for user ${userId} with id ${post.id}`);
 
     return post;
   }

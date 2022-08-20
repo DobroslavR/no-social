@@ -1,3 +1,4 @@
+import { TimelinePost } from '@frontend/posts/ui';
 import { useSearch } from '@frontend/shared/data-access';
 import { ApiQueryId } from '@frontend/shared/models';
 import { DebouncedSearchInput, PageCenteredContent } from '@frontend/shared/ui';
@@ -17,6 +18,7 @@ export const HomePage = () => {
     options: {
       q: search,
       sortBy: { path: 'created_at', direction: 'desc' },
+      pagination: { page: 1, limit: 30 },
       /*       filters: [
         {
           path: 'text',
@@ -31,10 +33,10 @@ export const HomePage = () => {
 
   return (
     <PageCenteredContent width={1000}>
-      <DebouncedSearchInput onChange={(e) => setSearch(e.target.value)} />
-      <Stack>
+      {/*     <DebouncedSearchInput onChange={(e) => setSearch(e.target.value)} /> */}
+      <Stack spacing={0}>
         {data.map((post) => (
-          <Paper key={post.id}>{post.text}</Paper>
+          <TimelinePost key={post.id} {...post} />
         ))}
       </Stack>
     </PageCenteredContent>

@@ -87,10 +87,6 @@ const generateFilterQueries = <T>({
     }
   }
 
-  const finalFilterQueries = merge(filterQueries, predefinedFilters);
-
-  console.log('finalFilterQueries', finalFilterQueries);
-
   return merge(filterQueries, predefinedFilters);
 };
 

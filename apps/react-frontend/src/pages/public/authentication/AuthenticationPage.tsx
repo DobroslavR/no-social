@@ -7,13 +7,12 @@ export const AuthenticationPage = () => {
       sx={{
         minHeight: '100vh',
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        placeContent: 'center',
       }}
     >
       <Center>
-        <Image width={300} src="/logo.svg" />
+        <Outlet></Outlet>
       </Center>
-      <Outlet></Outlet>
     </Box>
   );
 };

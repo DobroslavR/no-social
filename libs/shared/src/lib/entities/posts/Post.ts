@@ -26,7 +26,7 @@ export class Post {
   text!: string;
 
   @ManyToOne(() => User)
-  author = new Collection<User>(this);
+  author!: User;
 
   @ManyToMany(() => User)
   likes = new Collection<User>(this);

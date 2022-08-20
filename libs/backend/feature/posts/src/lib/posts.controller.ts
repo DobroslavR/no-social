@@ -4,6 +4,7 @@ import { AuthenticatedUser, CookieAuthenticationGuard, UserId } from '@backend/s
 import {
   CreatePostDraftDto,
   Post as PostEntity,
+  PublishPostDraftDto,
   PublishPostDto,
   SchedulePostDto,
   SearchRequestDto,
@@ -24,30 +25,35 @@ export class PostsController {
   }
 
   @Get('/:postId')
-  async findPostById(@AuthenticatedUser() user: User, @Param('postId') postId: string) {
+  async findPostById(@UserId() userId: string, @Param('postId') postId: string) {
     return this.postsService.findPostByIdWithErrorValidation({
       postId,
-      userId: user.id,
+      userId,
     });
   }
 
   @Post('draft')
-  async createPostDraft(@AuthenticatedUser() user: User, @Body() createPostDraftDto: CreatePostDraftDto) {
-    return this.postsService.createPostDraft(user.id, createPostDraftDto);
+  async createPostDraft(@UserId() userId: string, @Body() createPostDraftDto: CreatePostDraftDto) {
+    return this.postsService.createPostDraft(userId, createPostDraftDto);
   }
 
-  @Patch('publish')
-  async publishPost(@AuthenticatedUser() user: User, @Body() publishPostDto: PublishPostDto) {
-    return this.postsService.publishPost(user.id, publishPostDto);
+  @Post('publish')
+  async publishPost(@UserId() userId: string, @Body() publishPostNowDto: PublishPostDto) {
+    return this.postsService.publishPost(userId, publishPostNowDto);
+  }
+
+  @Patch('draft/publish')
+  async publishPostDraft(@UserId() userId: string, @Body() publishPostDto: PublishPostDraftDto) {
+    return this.postsService.publishPostDraft(userId, publishPostDto);
   }
 
   @Patch('schedule')
-  async schedulePost(@AuthenticatedUser() user: User, @Body() schedulePostDto: SchedulePostDto) {
-    return this.postsService.schedulePost(user.id, schedulePostDto);
+  async schedulePost(@UserId() userId: string, @Body() schedulePostDto: SchedulePostDto) {
+    return this.postsService.schedulePost(userId, schedulePostDto);
   }
 
   @Patch('unschedule/:postId')
-  async unschedulePost(@AuthenticatedUser() user: User, @Param('postId') postId: string) {
-    return this.postsService.unschedulePost(user.id, postId);
+  async unschedulePost(@UserId() userId: string, @Param('postId') postId: string) {
+    return this.postsService.unschedulePost(userId, postId);
   }
 }

@@ -38,10 +38,12 @@
       "@frontend/authentication/ui": ["libs/frontend/authentication/ui/src/index.ts"],
       "@frontend/home/data-access": ["libs/frontend/home/data-access/src/index.ts"],
       "@frontend/home/ui": ["libs/frontend/home/ui/src/index.ts"],
+      "@frontend/posts/ui": ["libs/frontend/posts/ui/src/index.ts"],
       "@frontend/shared/data-access": ["libs/frontend/shared/data-access/src/index.ts"],
       "@frontend/shared/models": ["libs/frontend/shared/models/src/index.ts"],
       "@frontend/shared/ui": ["libs/frontend/shared/ui/src/index.ts"],
       "@frontend/shared/utils": ["libs/frontend/shared/utils/src/index.ts"],
+      "@frontend/shell/ui": ["libs/frontend/shell/ui/src/index.ts"],
       "@frontend/users/data-access": ["libs/frontend/users/data-access/src/index.ts"],
       "@shared": ["libs/shared/src/index.ts"]
     }

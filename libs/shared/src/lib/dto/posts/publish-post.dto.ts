@@ -1,7 +1,3 @@
-import { IsNotEmpty, IsUUID } from 'class-validator';
+import { CreatePostDto } from './create-post.dto';
 
-export class PublishPostDto {
-  @IsNotEmpty()
-  @IsUUID()
-  postId!: string;
-}
+export class PublishPostDto extends CreatePostDto {}

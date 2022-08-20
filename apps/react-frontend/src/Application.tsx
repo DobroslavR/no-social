@@ -46,8 +46,8 @@ const PaperDefaultProps: Partial<PaperProps> = {
   shadow: 'sm',
   radius: 'md',
   sx: (theme) => ({
-    background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+    background: theme.colors.dark[9],
+    borderColor: theme.colors.dark[7],
   }),
 };
 
@@ -116,7 +116,7 @@ export function Application({ children }: { children: ReactNode }) {
           <Global
             styles={(theme) => ({
               body: {
-                background: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[1],
+                background: theme.colorScheme === 'dark' ? '#000' : theme.colors.gray[1],
               },
             })}
           />

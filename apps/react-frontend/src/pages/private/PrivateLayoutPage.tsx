@@ -7,7 +7,7 @@ import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en.json';
 import { PrivateLayoutGuard } from '@frontend/authentication/ui';
 import { ApplicationRoute } from '@frontend/shared/models';
-import { createAbsoluteRoute, createRelativeRoute } from '@frontend/shared/utils';
+import { PrivateLayout } from '@frontend/shell/ui';
 
 TimeAgo.addDefaultLocale(en);
 
@@ -23,7 +23,9 @@ export const PrivateLayoutPage = () => {
         nothingFoundMessage="Nothing found..."
       >
         <PrivateLayoutGuard redirectUrl={ApplicationRoute.AUTH}>
-          <Outlet></Outlet>
+          <PrivateLayout>
+            <Outlet></Outlet>
+          </PrivateLayout>
         </PrivateLayoutGuard>
       </SpotlightProvider>
     </ModalsProvider>

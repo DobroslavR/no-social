@@ -47,6 +47,9 @@
       "@no-social/backend/feature/posts": [
         "libs/backend/feature/posts/src/index.ts"
       ],
+      "@no-social/backend/feature/search": [
+        "libs/backend/feature/search/src/index.ts"
+      ],
       "@no-social/backend/feature/timeline": [
         "libs/backend/feature/timeline/src/index.ts"
       ],

@@ -6,6 +6,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
@@ -15,11 +16,13 @@ import { ApiTags } from '@nestjs/swagger';
 import {
   AuthenticatedUser,
   CookieAuthenticationGuard,
+  UserId,
 } from '@no-social/backend/shared';
 import {
   CreatePostDraftDto,
   PublishPostDto,
   SchedulePostDto,
+  SearchRequestDto,
   User,
 } from '@no-social/shared';
 import { PostsService } from './posts.service';
@@ -28,6 +31,15 @@ import { PostsService } from './posts.service';
 @ApiTags('Posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
+
+  @Post('/search')
+  @HttpCode(200)
+  async searchPosts(
+    @Body() searchRequestDto: SearchRequestDto,
+    @UserId() userId: string
+  ) {
+    return this.postsService.searchPosts(userId, searchRequestDto);
+  }
 
   @Get('/:postId')
   @UseGuards(CookieAuthenticationGuard)

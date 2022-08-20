@@ -1,7 +1,7 @@
 import { EntityRepository, MikroORM, UseRequestContext } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { CustomErrorCode } from '@no-social/backend/shared';
+import { Exception } from '@no-social/backend/shared';
 import { SignUpDto, User } from '@no-social/shared';
 
 interface CreateUsersProps extends SignUpDto {
@@ -43,7 +43,7 @@ export class UsersService {
       return user;
     }
     this.logger.log(`User with email: ${email} not found`);
-    throw new NotFoundException(CustomErrorCode.USER_NOT_FOUND);
+    throw new NotFoundException(Exception.USER_NOT_FOUND);
   }
 
   @UseRequestContext()

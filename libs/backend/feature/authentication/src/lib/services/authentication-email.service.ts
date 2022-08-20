@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigSchema } from '@no-social/backend/core/configuration';
 import { EmailService } from '@no-social/backend/feature/email';
 import { UsersService } from '@no-social/backend/feature/users';
-import { CustomErrorCode } from '@no-social/backend/shared';
+import { Exception } from '@no-social/backend/shared';
 import { ConfirmEmailDto, User } from '@no-social/shared';
 
 interface VerificationTokenPayload {
@@ -47,7 +47,7 @@ export class AuthenticationEmailService {
     this.logger.log(`Confirming email ${email}`);
     const user = await this.usersService.findByEmail(email);
     if (user.email_confirmed) {
-      throw new BadRequestException(CustomErrorCode.EMAIL_ALREADY_CONFIRMED);
+      throw new BadRequestException(Exception.EMAIL_ALREADY_CONFIRMED);
     }
     await this.usersService.markEmailAsConfirmed(email);
     this.logger.log(`Email ${email} confirmed`);
@@ -63,27 +63,23 @@ export class AuthenticationEmailService {
       if (typeof payload === 'object' && 'email' in payload) {
         return payload.email as string;
       } else {
-        throw new BadRequestException(
-          CustomErrorCode.BAD_EMAIL_CONFIRMATION_PAYLOAD
-        );
+        throw new BadRequestException(Exception.BAD_EMAIL_CONFIRMATION_PAYLOAD);
       }
     } catch (error) {
       const err = error as Error;
       if (err?.name === 'TokenExpiredError') {
         throw new BadRequestException(
-          CustomErrorCode.EMAIL_CONFIRMATION_LINK_EXPIRED
+          Exception.EMAIL_CONFIRMATION_LINK_EXPIRED
         );
       }
-      throw new BadRequestException(
-        CustomErrorCode.BAD_EMAIL_CONFIRMATION_PAYLOAD
-      );
+      throw new BadRequestException(Exception.BAD_EMAIL_CONFIRMATION_PAYLOAD);
     }
   }
 
   async resendConfirmationLink(user: User) {
     this.logger.log(`Resending confirmation link to ${user.email}`);
     if (user.email_confirmed) {
-      throw new BadRequestException(CustomErrorCode.EMAIL_ALREADY_CONFIRMED);
+      throw new BadRequestException(Exception.EMAIL_ALREADY_CONFIRMED);
     }
     await this.sendEmailVerificationLink(user.email);
     this.logger.log(`Confirmation link sent to ${user.email}`);

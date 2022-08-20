@@ -1,5 +1,6 @@
-import { EntityRepository, MikroORM } from '@mikro-orm/core';
+import { MikroORM } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
+import { EntityRepository } from '@mikro-orm/postgresql';
 import { InjectQueue } from '@nestjs/bull';
 import {
   BadRequestException,
@@ -7,26 +8,44 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { CustomErrorCode } from '@no-social/backend/shared';
+import { SearchService } from '@no-social/backend/feature/search';
+import { Exception } from '@no-social/backend/shared';
 import {
   CreatePostDraftDto,
   Post,
   PostState,
   PublishPostDto,
   SchedulePostDto,
+  SearchFilterOperator,
+  SearchRequestDto,
 } from '@no-social/shared';
 import { Queue } from 'bull';
 
 @Injectable()
-export class PostsService {
+export class PostsService extends SearchService<Post> {
   constructor(
     @InjectRepository(Post)
     private postsRepository: EntityRepository<Post>,
     private readonly orm: MikroORM,
     @InjectQueue('posts') private postsQueue: Queue
-  ) {}
+  ) {
+    super();
+  }
 
   private logger = new Logger('PostsService');
+
+  async searchPosts(userId: string, searchRequestDto: SearchRequestDto) {
+    return this.search({
+      repository: this.postsRepository,
+      searchRequestDto,
+      predefinedFilters: {
+        author: {
+          id: userId,
+        },
+      },
+      relations: ['author', 'likes', 'comments'],
+    });
+  }
 
   async createPostDraft(
     userId: string,
@@ -66,7 +85,7 @@ export class PostsService {
     });
 
     if (!post) {
-      throw new NotFoundException(CustomErrorCode.POST_NOT_FOUND);
+      throw new NotFoundException(Exception.POST_NOT_FOUND);
     }
 
     return post;
@@ -80,7 +99,7 @@ export class PostsService {
     const post = await this.findPostByIdWithErrorValidation({ userId, postId });
 
     if (post.state === PostState.PUBLISHED) {
-      throw new BadRequestException(CustomErrorCode.POST_ALREADY_PUBLISHED);
+      throw new BadRequestException(Exception.POST_ALREADY_PUBLISHED);
     }
 
     post.state = PostState.PUBLISHED;
@@ -99,7 +118,7 @@ export class PostsService {
     const post = await this.findPostByIdWithErrorValidation({ userId, postId });
 
     if (post.state !== PostState.SCHEDULED) {
-      throw new BadRequestException(CustomErrorCode.POST_NOT_SCHEDULED);
+      throw new BadRequestException(Exception.POST_NOT_SCHEDULED);
     }
 
     post.state = PostState.DRAFT;
@@ -122,19 +141,17 @@ export class PostsService {
     const isValidDelay = delay > 0;
 
     if (!isValidDelay) {
-      throw new BadRequestException(
-        CustomErrorCode.INVALID_POST_SCHEDULED_AT_DATE
-      );
+      throw new BadRequestException(Exception.INVALID_POST_SCHEDULED_AT_DATE);
     }
 
     const post = await this.findPostByIdWithErrorValidation({ userId, postId });
 
     if (post.state === PostState.PUBLISHED) {
-      throw new BadRequestException(CustomErrorCode.POST_ALREADY_PUBLISHED);
+      throw new BadRequestException(Exception.POST_ALREADY_PUBLISHED);
     }
 
     if (post.state === PostState.SCHEDULED) {
-      throw new BadRequestException(CustomErrorCode.POST_ALREADY_SCHEDULED);
+      throw new BadRequestException(Exception.POST_ALREADY_SCHEDULED);
     }
 
     post.state = PostState.SCHEDULED;

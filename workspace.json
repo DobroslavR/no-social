@@ -14,6 +14,7 @@
     "backend-feature-follow": "libs/backend/feature/follow",
     "backend-feature-media": "libs/backend/feature/media",
     "backend-feature-posts": "libs/backend/feature/posts",
+    "backend-feature-search": "libs/backend/feature/search",
     "backend-feature-timeline": "libs/backend/feature/timeline",
     "backend-feature-upvote": "libs/backend/feature/upvote",
     "backend-feature-users": "libs/backend/feature/users",

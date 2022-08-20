@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { UsersService } from '@no-social/backend/feature/users';
-import { CustomErrorCode } from '@no-social/backend/shared';
+import { Exception } from '@no-social/backend/shared';
 import { ChangePasswordDto, SignInDto, User } from '@no-social/shared';
 import { genSalt, hash as bcryptHash } from 'bcrypt';
 import { ValidationCredentials } from '../authentication.interface';
@@ -19,7 +19,7 @@ export class AuthenticationPasswordService {
     const isValidOldPassword = await this.validatePassword(user, old_password);
 
     if (!isValidOldPassword) {
-      throw new BadRequestException(CustomErrorCode.BAD_OLD_PASSWORD);
+      throw new BadRequestException(Exception.BAD_OLD_PASSWORD);
     }
 
     const { hashedPassword, salt } = await this.generateHashedPasswordAndSalt(

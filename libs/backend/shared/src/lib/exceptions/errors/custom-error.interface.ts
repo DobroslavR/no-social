@@ -1,6 +1,6 @@
-import { CustomErrorCode } from './custom-error.enum';
+import { Exception } from './custom-error.enum';
 
 export interface CustomError {
-  code?: CustomErrorCode;
+  code?: Exception;
   message: string;
 }

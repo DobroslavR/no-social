@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigSchema } from '@no-social/backend/core/configuration';
 import { EmailService } from '@no-social/backend/feature/email';
 import { UsersService } from '@no-social/backend/feature/users';
-import { CustomErrorCode } from '@no-social/backend/shared';
+import { Exception } from '@no-social/backend/shared';
 import {
   ForgotPasswordDto,
   ChangeForgottenPasswordDto,
@@ -86,15 +86,13 @@ export class AuthenticationForgotPasswordService {
         return payload.email as string;
       }
 
-      throw new BadRequestException(CustomErrorCode.BAD_PASSWORD_RESET_PAYLOAD);
+      throw new BadRequestException(Exception.BAD_PASSWORD_RESET_PAYLOAD);
     } catch (error) {
       const err = error as Error;
       if (err?.name === 'TokenExpiredError') {
-        throw new BadRequestException(
-          CustomErrorCode.PASSWORD_RESET_LINK_EXPIRED
-        );
+        throw new BadRequestException(Exception.PASSWORD_RESET_LINK_EXPIRED);
       }
-      throw new BadRequestException(CustomErrorCode.BAD_PASSWORD_RESET_PAYLOAD);
+      throw new BadRequestException(Exception.BAD_PASSWORD_RESET_PAYLOAD);
     }
   }
 }

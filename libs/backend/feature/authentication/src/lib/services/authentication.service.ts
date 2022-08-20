@@ -6,7 +6,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { UsersService } from '@no-social/backend/feature/users';
-import { CustomErrorCode } from '@no-social/backend/shared';
+import { Exception } from '@no-social/backend/shared';
 import { SignUpDto } from '@no-social/shared';
 
 import { AuthenticationEmailService } from './authentication-email.service';
@@ -42,7 +42,7 @@ export class AuthenticationService {
       } catch (error) {
         this.logger.error(error);
         throw new ConflictException(
-          CustomErrorCode.FAILED_TO_SEND_VERIFICATION_EMAIL
+          Exception.FAILED_TO_SEND_VERIFICATION_EMAIL
         );
       }
       return user;
@@ -51,7 +51,7 @@ export class AuthenticationService {
       // TODO: Add proper error handling
       if (error?.code === '23505') {
         this.logger.error(`User ${email} already exists`);
-        throw new ConflictException(CustomErrorCode.USER_ALREADY_EXISTS);
+        throw new ConflictException(Exception.USER_ALREADY_EXISTS);
       }
 
       /*      this.logger.error(`Error signing up user ${email}`); */

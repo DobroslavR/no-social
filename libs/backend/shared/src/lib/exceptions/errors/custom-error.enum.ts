@@ -1,4 +1,4 @@
-export enum CustomErrorCode {
+export enum Exception {
   // Emails
   EMAIL_ALREADY_CONFIRMED = 'email_already_confirmed',
   BAD_EMAIL_CONFIRMATION_PAYLOAD = 'bad_email_confirmation_payload',
@@ -17,4 +17,7 @@ export enum CustomErrorCode {
   POST_ALREADY_SCHEDULED = 'post_already_scheduled',
   POST_ALREADY_PUBLISHED = 'post_already_published',
   POST_NOT_SCHEDULED = 'post_not_scheduled',
+  // Search Engine
+  NOT_ALLOWED_SEARCH_FILTERS = 'NOT_ALLOWED_SEARCH_FILTERS',
+  NOT_ALLOWED_SEARCH_SORT = 'NOT_ALLOWED_SEARCH_SORT',
 }

@@ -1,6 +1,6 @@
+import { Route, RoutePath } from '@frontend/shared/models';
 import { Suspense } from 'react';
-import { Route, Navigate } from 'react-router-dom';
-import { ApplicationRoute, RoutePath } from '../interfaces';
+import { Route as ReactRoute, Navigate } from 'react-router-dom';
 
 export const createAbsoluteRoute = (...routes: RoutePath[]) => {
   return `/${routes.join('/')}`;
@@ -10,9 +10,9 @@ export const createRelativeRoute = (...routes: RoutePath[]) => {
   return `${routes.join('/')}`;
 };
 
-export const mapRouting = (routes: ApplicationRoute[]) => {
+export const mapRouting = (routes: Route[]) => {
   return routes.map(({ path, subroutes, redirect, index: isIndex, redirectPath, component: LazyComponent }, index) => (
-    <Route
+    <ReactRoute
       key={path ? path : redirectPath ? redirectPath : index}
       path={path}
       index={isIndex}
@@ -40,6 +40,6 @@ export const mapRouting = (routes: ApplicationRoute[]) => {
       }
     >
       {subroutes && mapRouting(subroutes)}
-    </Route>
+    </ReactRoute>
   ));
 };

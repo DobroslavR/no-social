@@ -2,6 +2,7 @@ import {
   Collection,
   Entity,
   Enum,
+  Index,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -9,6 +10,7 @@ import {
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
+import { FullTextType } from '@mikro-orm/postgresql';
 import { v4 } from 'uuid';
 import { PostState } from '../../enums';
 import { User } from '../users';
@@ -19,6 +21,7 @@ export class Post {
   @PrimaryKey({ columnType: 'uuid' })
   id = v4();
 
+  @Index()
   @Property({ length: 300 })
   text!: string;
 

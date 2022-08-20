@@ -5,8 +5,9 @@ import { Search } from 'tabler-icons-react';
 import TimeAgo from 'javascript-time-ago';
 // @ts-ignore
 import en from 'javascript-time-ago/locale/en.json';
-import { RootRoute } from '@frontend/shared/models';
-import { PrivateLayoutGuard } from '@frontend/shared/ui';
+import { PrivateLayoutGuard } from '@frontend/authentication/ui';
+import { ApplicationRoute } from '@frontend/shared/models';
+import { createAbsoluteRoute, createRelativeRoute } from '@frontend/shared/utils';
 
 TimeAgo.addDefaultLocale(en);
 
@@ -21,7 +22,7 @@ export const PrivateLayoutPage = () => {
         highlightQuery
         nothingFoundMessage="Nothing found..."
       >
-        <PrivateLayoutGuard redirectUrl={`/${RootRoute.AUTH}`}>
+        <PrivateLayoutGuard redirectUrl={ApplicationRoute.AUTH}>
           <Outlet></Outlet>
         </PrivateLayoutGuard>
       </SpotlightProvider>

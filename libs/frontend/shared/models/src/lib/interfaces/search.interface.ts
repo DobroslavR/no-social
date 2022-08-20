@@ -1,7 +1,7 @@
 import { SearchApiPagination, SearchRequestFilterDto, SearchRequestSortDto } from '@shared';
 
 export interface SearchOptions<T extends object = Record<string, unknown>> {
-  pagination: SearchApiPagination;
+  pagination?: SearchApiPagination;
   q?: string;
   sortBy?: SearchRequestSortDto<T>;
   filters?: SearchRequestFilterDto<T>[];

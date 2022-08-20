@@ -5,7 +5,7 @@ import { NestedPath } from '../../interfaces';
 export class SearchRequestFilterDto<T> {
   @IsEnum(SearchRequestFilterOperator)
   @IsNotEmpty()
-  operator!: SearchRequestFilterOperator;
+  operator!: `${SearchRequestFilterOperator}`;
 
   @IsNotEmpty()
   value: unknown;

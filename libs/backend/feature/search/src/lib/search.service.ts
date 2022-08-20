@@ -81,6 +81,16 @@ const generateFilterQueries = <T>({
     merge(filterQueries, getFilterCondition(f));
   }
 
+  if (q && searchFields) {
+    for (const sf of searchFields) {
+      merge(filterQueries, { [sf]: { $ilike: `%${q}%` } });
+    }
+  }
+
+  const finalFilterQueries = merge(filterQueries, predefinedFilters);
+
+  console.log('finalFilterQueries', finalFilterQueries);
+
   return merge(filterQueries, predefinedFilters);
 };
 
@@ -116,11 +126,15 @@ const getPaginationMeta = (
 ): SearchApiResponseMeta => {
   const { limit, page } = searchRequestPaginationDto;
 
+  const hasOnePage = total_count <= limit;
+
+  const total_pages = hasOnePage ? 1 : Math.ceil(total_count / limit);
+
   const meta: SearchApiResponseMeta = {
     page,
     limit,
     total_count,
-    total_pages: total_count < limit ? 1 : (total_count - (total_count % limit)) / limit,
+    total_pages,
     has_next_page: total_count > page * limit,
     has_previous_page: page > 1,
   };
@@ -152,6 +166,8 @@ export class SearchService<T> {
     } = options;
 
     const { pagination, filters = [], q, sortBy } = searchRequestDto;
+
+    console.log(q);
 
     if (checkIfIncludesNotAllowedSortByRules(allowedSorts, sortBy)) {
       throw new BadRequestException(Exception.NOT_ALLOWED_SEARCH_SORT);

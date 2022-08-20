@@ -16,7 +16,6 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@frontend/users/data-access": ["libs/frontend/users/data-access/src/index.ts"],
       "@backend/core": ["libs/backend/core/core/src/index.ts"],
       "@backend/core/azure-media-storage": ["libs/backend/core/azure-media-storage/src/index.ts"],
       "@backend/core/cache": ["libs/backend/core/cache/src/index.ts"],
@@ -35,10 +34,15 @@
       "@backend/feature/upvote": ["libs/backend/feature/upvote/src/index.ts"],
       "@backend/feature/users": ["libs/backend/feature/users/src/index.ts"],
       "@backend/shared": ["libs/backend/shared/src/index.ts"],
+      "@frontend/authentication/data-access": ["libs/frontend/authentication/data-access/src/index.ts"],
+      "@frontend/authentication/ui": ["libs/frontend/authentication/ui/src/index.ts"],
+      "@frontend/home/data-access": ["libs/frontend/home/data-access/src/index.ts"],
+      "@frontend/home/ui": ["libs/frontend/home/ui/src/index.ts"],
       "@frontend/shared/data-access": ["libs/frontend/shared/data-access/src/index.ts"],
       "@frontend/shared/models": ["libs/frontend/shared/models/src/index.ts"],
       "@frontend/shared/ui": ["libs/frontend/shared/ui/src/index.ts"],
       "@frontend/shared/utils": ["libs/frontend/shared/utils/src/index.ts"],
+      "@frontend/users/data-access": ["libs/frontend/users/data-access/src/index.ts"],
       "@shared": ["libs/shared/src/index.ts"]
     }
   },

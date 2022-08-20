@@ -25,13 +25,15 @@ export class PostsService extends SearchService<Post> {
     return this.search({
       repository: this.postsRepository,
       searchRequestDto,
+      searchFields: ['text'],
+      allowedFilters: ['text'],
       allowedSorts: ['created_at', 'published_at', 'scheduled_at'],
       predefinedFilters: {
         author: {
           id: userId,
         },
       },
-      relations: ['author', 'likes', 'comments'],
+      relations: ['author'],
     });
   }
 

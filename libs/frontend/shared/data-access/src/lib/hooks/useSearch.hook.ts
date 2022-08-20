@@ -21,12 +21,11 @@ export const useSearch = <T extends object = Record<string, unknown>>({
   queryOptions,
   options,
   dataSourceEndpoint,
-  prefetchNextPage,
 }: UseSearchOptions<T>) => {
-  const { sortBy, filters, q, pagination } = options || {};
+  const { sortBy, filters, q, pagination = { limit: 10, page: 1 } } = options || {};
 
-  const [page, setPage] = useState<number>(pagination?.page || 1);
-  const [limit, setLimit] = useState<number>(pagination?.limit || 10);
+  const [page, setPage] = useState<number>(pagination.page || 1);
+  const [limit, setLimit] = useState<number>(pagination.limit || 10);
 
   const goToNextPage = useCallback(() => {
     setPage((prevPage) => prevPage + 1);

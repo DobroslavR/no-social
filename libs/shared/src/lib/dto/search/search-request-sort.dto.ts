@@ -9,5 +9,5 @@ export class SearchRequestSortDto<T> {
 
   @IsEnum(SearchRequestSortDirection)
   @IsNotEmpty()
-  direction!: SearchRequestSortDirection;
+  direction!: `${SearchRequestSortDirection}`;
 }

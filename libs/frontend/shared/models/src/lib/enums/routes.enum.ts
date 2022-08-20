@@ -1,13 +1,13 @@
-export enum RootRoute {
-  ROOT = '/',
-  AUTH = 'auth',
-}
-
 export enum ApplicationRoute {
-  HOME = '/',
+  ROOT = '/',
+  AUTH = '/',
+  HOME = 'home',
 }
 
 export enum AuthRoute {
-  SIGN_UP = 'sign-up',
   SIGN_IN = 'sign-in',
+  SIGN_UP = 'sign-up',
+  FORGOT_PASSWORD = 'forgot-password',
+  CONFIRM_EMAIL_REQUEST = 'confirm-email',
+  EMAIL_VERIFICATION = 'verification',
 }

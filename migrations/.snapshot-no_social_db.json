@@ -147,6 +147,14 @@
           "length": 300,
           "mappedType": "string"
         },
+        "searchable_text": {
+          "name": "searchable_text",
+          "type": "tsvector",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true
+        },
         "author_id": {
           "name": "author_id",
           "type": "uuid",
@@ -200,6 +208,14 @@
       "name": "posts",
       "schema": "public",
       "indexes": [
+        {
+          "keyName": "posts_searchable_text_index",
+          "columnNames": ["searchable_text"],
+          "composite": false,
+          "primary": false,
+          "unique": false,
+          "type": "fulltext"
+        },
         {
           "keyName": "posts_pkey",
           "columnNames": ["id"],

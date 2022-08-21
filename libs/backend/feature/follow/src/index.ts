@@ -1,1 +1,1 @@
-export * from './lib/backend-feature-follow.module';
+export * from './lib/follow.module';

@@ -18,18 +18,9 @@ export class TimelineService extends SearchService<Post> {
       allowedSorts: ['created_at', 'published_at', 'scheduled_at', 'reply_count'],
       predefinedFilters: {
         author: {
-          $or: [
-            {
-              followers: {
-                $in: [userId],
-              },
-            },
-            {
-              following: {
-                $in: [userId],
-              },
-            },
-          ],
+          followers: {
+            $in: [userId],
+          },
         },
         state: PostState.PUBLISHED,
       },

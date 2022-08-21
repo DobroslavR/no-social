@@ -8,6 +8,7 @@ import { UsersModule } from '@backend/feature/users';
 import { MediaModule } from '@backend/feature/media';
 import { TimelineModule } from '@backend/feature/timeline';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { FollowModule } from '@backend/feature/follow';
 
 @Module({
   imports: [
@@ -19,12 +20,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     MediaModule,
     PostsModule,
     SearchModule,
-  ],
-  providers: [
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ClassSerializerInterceptor,
-    },
+    FollowModule,
   ],
 })
 export class AppModule {}

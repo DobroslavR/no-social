@@ -1,3 +1,3 @@
-export * from './PageHeading';
-export * from './PageDescription';
+export * from './PageHead';
 export * from './PageCenteredContent';
+export * from './PageHeadBox';

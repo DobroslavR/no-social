@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpCode, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthenticatedUser, CookieAuthenticationGuard, UserId } from '@backend/shared';
+import { CookieAuthenticationGuard, UserId } from '@backend/shared';
 import {
   CreatePostDraftDto,
   Post as PostEntity,
@@ -8,7 +8,6 @@ import {
   PublishPostDto,
   SchedulePostDto,
   SearchRequestDto,
-  User,
 } from '@shared';
 import { PostsService } from './posts.service';
 
@@ -32,14 +31,19 @@ export class PostsController {
     });
   }
 
+  @Post('reply/:postId')
+  async replyToPost(@UserId() userId: string, @Param('postId') postId: string, @Body() publishPostDto: PublishPostDto) {
+    return this.postsService.replyToPost({ userId, postId, publishPostDto });
+  }
+
   @Post('draft')
   async createPostDraft(@UserId() userId: string, @Body() createPostDraftDto: CreatePostDraftDto) {
     return this.postsService.createPostDraft(userId, createPostDraftDto);
   }
 
   @Post('publish')
-  async publishPost(@UserId() userId: string, @Body() publishPostNowDto: PublishPostDto) {
-    return this.postsService.publishPost(userId, publishPostNowDto);
+  async publishPost(@UserId() userId: string, @Body() publishPostDto: PublishPostDto) {
+    return this.postsService.publishPost({ userId, publishPostDto });
   }
 
   @Patch('draft/publish')

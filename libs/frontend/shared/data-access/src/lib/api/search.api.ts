@@ -8,13 +8,18 @@ export const search = async <T extends object = Record<string, unknown>>({
   sortBy,
   filters,
   q,
+  customEndpointPath,
 }: SearchWithAPIOptions<T>) => {
-  const searchRequestDto: SearchRequestDto = {
+  const searchRequestDto: SearchRequestDto<T> = {
     pagination: pagination as SearchRequestPaginationDto,
     sortBy,
     filters,
     q,
   };
 
-  return api.post<SearchApiResponse<T>>(`${dataSourceEndpoint}/search`, searchRequestDto).then((res) => res.data);
+  const endpointPath = customEndpointPath ? customEndpointPath : 'search';
+
+  return api
+    .post<SearchApiResponse<T>>(`${dataSourceEndpoint}/${endpointPath}`, searchRequestDto)
+    .then((res) => res.data);
 };

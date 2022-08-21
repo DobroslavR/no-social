@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 export const useFormatNumber = () => {
-  const format = useCallback((num: number, digits = 2) => {
+  const format = useCallback((num = 0, digits = 2) => {
     const lookup = [
       { value: 1, symbol: '' },
       { value: 1e3, symbol: 'K' },

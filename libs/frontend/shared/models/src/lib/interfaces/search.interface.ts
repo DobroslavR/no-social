@@ -9,4 +9,5 @@ export interface SearchOptions<T extends object = Record<string, unknown>> {
 
 export interface SearchWithAPIOptions<T extends object = Record<string, unknown>> extends SearchOptions<T> {
   dataSourceEndpoint: string;
+  customEndpointPath?: string;
 }

@@ -14,6 +14,7 @@ export interface UseSearchOptions<T extends object = Record<string, unknown>> {
     'queryKey' | 'queryFn'
   >;
   prefetchNextPage?: boolean;
+  customEndpointPath?: string;
 }
 
 export const useSearch = <T extends object = Record<string, unknown>>({
@@ -21,6 +22,7 @@ export const useSearch = <T extends object = Record<string, unknown>>({
   queryOptions,
   options,
   dataSourceEndpoint,
+  customEndpointPath,
 }: UseSearchOptions<T>) => {
   const { sortBy, filters, q, pagination = { limit: 10, page: 1 } } = options || {};
 
@@ -47,6 +49,7 @@ export const useSearch = <T extends object = Record<string, unknown>>({
         sortBy,
         filters,
         q,
+        customEndpointPath,
       }),
     queryOptions
   );

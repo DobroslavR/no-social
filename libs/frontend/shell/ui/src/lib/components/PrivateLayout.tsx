@@ -1,5 +1,5 @@
 import { PageCenteredContent } from '@frontend/shared/ui';
-import { Avatar, Box, Group, Paper, Stack, Textarea, Title } from '@mantine/core';
+import { Avatar, Box, Group, Paper, Stack, Textarea } from '@mantine/core';
 import { ReactNode } from 'react';
 import { LayoutNavigation } from './LayoutNavigation';
 
@@ -21,27 +21,6 @@ export const PrivateLayout = ({ children }: { children: ReactNode }) => {
           })}
           spacing={0}
         >
-          <Box
-            sx={(theme) => ({
-              borderBottom: `1px solid ${theme.colors.dark[7]}`,
-            })}
-            px="md"
-            py="sm"
-          >
-            <Group mb="sm">
-              <Title m={0} order={4}>
-                Home
-              </Title>
-            </Group>
-            <Group sx={{ width: '100%' }} align="flex-start">
-              <Avatar color="blue" radius="xl" size="md">
-                DR
-              </Avatar>
-              <Stack>
-                <Textarea placeholder="Whats happenning now?" variant="filled" />
-              </Stack>
-            </Group>
-          </Box>
           <Box>{children}</Box>
         </Stack>
         <Paper

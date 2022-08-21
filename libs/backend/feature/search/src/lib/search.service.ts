@@ -124,14 +124,14 @@ const getPaginationMeta = (
 
   const hasOnePage = total_count <= limit;
 
-  const total_pages = hasOnePage ? 1 : Math.ceil(total_count / limit);
+  const total_pages = hasOnePage ? 1 : Math.floor(total_count / limit);
 
   const meta: SearchApiResponseMeta = {
     page,
     limit,
     total_count,
     total_pages,
-    has_next_page: total_count > page * limit,
+    has_next_page: page < total_pages,
     has_previous_page: page > 1,
   };
 

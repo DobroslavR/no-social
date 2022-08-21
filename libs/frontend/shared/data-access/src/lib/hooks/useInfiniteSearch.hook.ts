@@ -11,6 +11,7 @@ export interface UseInfiniteSearchOptions<T extends object = Record<string, unkn
   dataSourceEndpoint: string;
   options?: Omit<SearchOptions<T>, 'pagination'>;
   limit?: number;
+  customEndpointPath?: string;
   queryOptions?: Omit<
     UseInfiniteQueryOptions<
       SearchApiResponse<T>,
@@ -28,6 +29,7 @@ export const useInfiniteSearch = <T extends object = Record<string, unknown>>({
   queryOptions,
   options,
   dataSourceEndpoint,
+  customEndpointPath,
   limit = 10,
 }: UseInfiniteSearchOptions<T>) => {
   const { sortBy, filters, q } = options || {};
@@ -44,6 +46,7 @@ export const useInfiniteSearch = <T extends object = Record<string, unknown>>({
         sortBy,
         filters,
         q,
+        customEndpointPath,
       });
     },
     {

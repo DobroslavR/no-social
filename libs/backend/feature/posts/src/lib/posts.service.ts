@@ -29,20 +29,22 @@ export class PostsService extends SearchService<Post> {
 
   private logger = new Logger('PostsService');
 
+  getRepository() {
+    return this.postsRepository;
+  }
+
   async searchPosts(userId: string, searchRequestDto: SearchRequestDto<Post>) {
     return this.search({
       repository: this.postsRepository,
       searchRequestDto,
       searchFields: ['text'],
       allowedFilters: ['text'],
-      allowedSorts: ['created_at', 'published_at', 'scheduled_at'],
+      allowedSorts: ['created_at', 'published_at', 'scheduled_at', 'reply_count'],
       predefinedFilters: {
-        author: {
-          id: userId,
-        },
+        author: userId,
         state: PostState.PUBLISHED,
       },
-      relations: ['author'],
+      relations: ['author', 'in_reply_to.author'],
     });
   }
 
@@ -64,15 +66,34 @@ export class PostsService extends SearchService<Post> {
     return post;
   }
 
+  async replyToPost({
+    userId,
+    postId,
+    publishPostDto,
+  }: {
+    userId: string;
+    postId: string;
+    publishPostDto: PublishPostDto;
+  }) {
+    this.logger.log(`Replying to post for user ${userId} with id ${postId}`);
+
+    const post = await this.findPostByIdWithErrorValidation({ userId, postId });
+
+    const repliedPost = await this.publishPost({ userId, publishPostDto, replyToId: post.id });
+
+    return repliedPost;
+  }
+
   async findPostByIdWithErrorValidation({ postId, userId }: { userId: string; postId: string }) {
     this.logger.log(`Finding post ${postId} for user ${userId}`);
 
-    const post = await this.postsRepository.findOne({
-      id: postId,
-      author: {
-        id: userId,
+    const post = await this.postsRepository.findOne(
+      {
+        id: postId,
+        author: userId,
       },
-    });
+      { populate: ['replies', 'author'] }
+    );
 
     if (!post) {
       throw new NotFoundException(Exception.POST_NOT_FOUND);
@@ -102,8 +123,16 @@ export class PostsService extends SearchService<Post> {
     return post;
   }
 
-  async publishPost(userId: string, publishPostNowDto: PublishPostDto) {
-    const { text } = publishPostNowDto;
+  async publishPost({
+    publishPostDto,
+    replyToId,
+    userId,
+  }: {
+    userId: string;
+    publishPostDto: PublishPostDto;
+    replyToId?: string;
+  }) {
+    const { text } = publishPostDto;
 
     this.logger.log(`Publishing postnow for user ${userId}`);
 
@@ -112,6 +141,7 @@ export class PostsService extends SearchService<Post> {
       author: userId,
       state: PostState.PUBLISHED,
       published_at: new Date(),
+      in_reply_to: replyToId ? replyToId : null,
     });
 
     await this.postsRepository.persistAndFlush(post);

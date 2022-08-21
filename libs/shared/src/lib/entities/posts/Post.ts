@@ -1,9 +1,8 @@
-import { Entity, Enum, Index, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, Enum, Formula, Index, ManyToOne, OneToMany, OneToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { PostState } from '../../enums';
 import { Media } from '../media';
 import { User } from '../users';
-import { PostComment } from './PostComment';
 
 @Entity({ tableName: 'posts' })
 export class Post {
@@ -14,14 +13,20 @@ export class Post {
   @Property({ length: 300 })
   text!: string;
 
+  @ManyToOne(() => Post, { nullable: true })
+  in_reply_to?: Post | null;
+
+  @OneToMany(() => Post, (post) => post.in_reply_to, { hidden: true })
+  replies?: Post[];
+
+  @Formula((alias) => `CAST((SELECT COUNT(*) FROM posts WHERE in_reply_to_id = ${alias}.id) AS int)`)
+  reply_count?: number;
+
   @ManyToOne(() => User)
   author!: User;
 
   @ManyToOne(() => Media, { nullable: true })
   media?: Media | null;
-
-  @OneToMany(() => PostComment, (post_comment) => post_comment.post, { hidden: true })
-  comments?: PostComment[];
 
   @Enum(() => PostState)
   state!: PostState;

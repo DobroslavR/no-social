@@ -1,1 +1,1 @@
-export * from './lib/backend-feature-timeline.module';
+export * from './lib/timeline.module';

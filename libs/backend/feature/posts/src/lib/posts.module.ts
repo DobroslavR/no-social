@@ -2,19 +2,19 @@ import { PostsService } from './posts.service';
 import { PostsController } from './posts.controller';
 import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { Post, PostComment } from '@shared';
+import { Post } from '@shared';
 import { BullModule } from '@nestjs/bull';
 import { PostsProcessor } from './posts.processor';
 
 @Module({
   imports: [
-    MikroOrmModule.forFeature([Post, PostComment]),
+    MikroOrmModule.forFeature([Post]),
     BullModule.registerQueue({
       name: 'posts',
     }),
   ],
   controllers: [PostsController],
   providers: [PostsService, PostsProcessor],
-  exports: [],
+  exports: [PostsService],
 })
 export class PostsModule {}

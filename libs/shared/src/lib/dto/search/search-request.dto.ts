@@ -1,4 +1,5 @@
-import { IsArray, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsArray, IsDefined, IsNotEmptyObject, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { SearchRequestPaginationDto } from './search-request-pagination.dto';
 import { SearchRequestSortDto } from './search-request-sort.dto';
 import { SearchRequestFilterDto } from './search-request.filter.dto';
@@ -12,12 +13,16 @@ export class SearchRequestDto<T> {
   @IsOptional()
   sortBy?: SearchRequestSortDto<T>;
 
+  @IsDefined()
+  @IsNotEmptyObject()
+  @IsObject()
   @ValidateNested()
-  @IsNotEmpty()
+  @Type(() => SearchRequestPaginationDto)
   pagination!: SearchRequestPaginationDto;
 
-  @ValidateNested()
   @IsArray()
   @IsOptional()
+  @ValidateNested()
+  @Type(() => SearchRequestFilterDto)
   filters?: SearchRequestFilterDto<T>[];
 }

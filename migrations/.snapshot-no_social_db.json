@@ -137,6 +137,69 @@
           "nullable": false,
           "mappedType": "uuid"
         },
+        "url": {
+          "name": "url",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "author_id": {
+          "name": "author_id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "uuid"
+        },
+        "uploaded_at": {
+          "name": "uploaded_at",
+          "type": "timestamptz",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        }
+      },
+      "name": "media",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "media_pkey",
+          "columnNames": ["id"],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "media_author_id_foreign": {
+          "constraintName": "media_author_id_foreign",
+          "columnNames": ["author_id"],
+          "localTableName": "public.media",
+          "referencedColumnNames": ["id"],
+          "referencedTableName": "public.users",
+          "updateRule": "cascade"
+        }
+      }
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "uuid"
+        },
         "text": {
           "name": "text",
           "type": "varchar(300)",
@@ -147,14 +210,6 @@
           "length": 300,
           "mappedType": "string"
         },
-        "searchable_text": {
-          "name": "searchable_text",
-          "type": "tsvector",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true
-        },
         "author_id": {
           "name": "author_id",
           "type": "uuid",
@@ -162,6 +217,15 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "mappedType": "uuid"
+        },
+        "media_id": {
+          "name": "media_id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
           "mappedType": "uuid"
         },
         "state": {
@@ -209,12 +273,11 @@
       "schema": "public",
       "indexes": [
         {
-          "keyName": "posts_searchable_text_index",
-          "columnNames": ["searchable_text"],
+          "columnNames": ["text"],
           "composite": false,
+          "keyName": "posts_text_index",
           "primary": false,
-          "unique": false,
-          "type": "fulltext"
+          "unique": false
         },
         {
           "keyName": "posts_pkey",
@@ -233,59 +296,14 @@
           "referencedColumnNames": ["id"],
           "referencedTableName": "public.users",
           "updateRule": "cascade"
-        }
-      }
-    },
-    {
-      "columns": {
-        "post_id": {
-          "name": "post_id",
-          "type": "uuid",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "uuid"
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "uuid",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "uuid"
-        }
-      },
-      "name": "posts_likes",
-      "schema": "public",
-      "indexes": [
-        {
-          "keyName": "posts_likes_pkey",
-          "columnNames": ["post_id", "user_id"],
-          "composite": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "posts_likes_post_id_foreign": {
-          "constraintName": "posts_likes_post_id_foreign",
-          "columnNames": ["post_id"],
-          "localTableName": "public.posts_likes",
+        "posts_media_id_foreign": {
+          "constraintName": "posts_media_id_foreign",
+          "columnNames": ["media_id"],
+          "localTableName": "public.posts",
           "referencedColumnNames": ["id"],
-          "referencedTableName": "public.posts",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
-        "posts_likes_user_id_foreign": {
-          "constraintName": "posts_likes_user_id_foreign",
-          "columnNames": ["user_id"],
-          "localTableName": "public.posts_likes",
-          "referencedColumnNames": ["id"],
-          "referencedTableName": "public.users",
-          "deleteRule": "cascade",
+          "referencedTableName": "public.media",
+          "deleteRule": "set null",
           "updateRule": "cascade"
         }
       }

@@ -1,18 +1,7 @@
-import {
-  Collection,
-  Entity,
-  Enum,
-  Index,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-  PrimaryKey,
-  Property,
-} from '@mikro-orm/core';
-import { FullTextType } from '@mikro-orm/postgresql';
+import { Entity, Enum, Index, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { PostState } from '../../enums';
+import { Media } from '../media';
 import { User } from '../users';
 import { PostComment } from './PostComment';
 
@@ -28,10 +17,10 @@ export class Post {
   @ManyToOne(() => User)
   author!: User;
 
-  @ManyToMany(() => User)
-  likes = new Collection<User>(this);
+  @ManyToOne(() => Media, { nullable: true })
+  media?: Media | null;
 
-  @OneToMany(() => PostComment, (post_comment) => post_comment.post)
+  @OneToMany(() => PostComment, (post_comment) => post_comment.post, { hidden: true })
   comments?: PostComment[];
 
   @Enum(() => PostState)

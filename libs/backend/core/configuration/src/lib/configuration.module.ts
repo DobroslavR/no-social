@@ -36,6 +36,11 @@ export interface ConfigSchema {
   CLIENT_URL: string;
   // Env
   NODE_ENV: string;
+  // Azure Storage
+  AZURE_STORAGE_SAS_KEY: string;
+  AZURE_STORAGE_ACCOUNT: string;
+  AZURE_STORAGE_CONTAINER_NAME: string;
+  AZURE_STORAGE_CDN_URL: string;
 }
 
 @Module({
@@ -65,6 +70,10 @@ export interface ConfigSchema {
         CLIENT_URL: Joi.string().required(),
         FORGOT_PASSWORD_URL: Joi.string().required(),
         NODE_ENV: Joi.string().valid('development', 'production'),
+        AZURE_STORAGE_SAS_KEY: Joi.string().required(),
+        AZURE_STORAGE_ACCOUNT: Joi.string().required(),
+        AZURE_STORAGE_CONTAINER_NAME: Joi.string().required(),
+        AZURE_STORAGE_CDN_URL: Joi.string().required(),
       }),
     }),
   ],

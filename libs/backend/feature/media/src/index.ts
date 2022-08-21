@@ -1,1 +1,1 @@
-export * from './lib/backend-feature-media.module';
+export * from './lib/media.module';
